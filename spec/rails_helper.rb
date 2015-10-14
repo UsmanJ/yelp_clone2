@@ -7,8 +7,9 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
 require 'database_cleaner'
-# require 'factory_girl_rails'
-# require_relative './factories/user'
+require 'factory_girl_rails'
+require_relative 'helpers/session'
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -34,7 +35,9 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # config.include FactoryGirl::Syntax::Methods
+  config.include FactoryGirl::Syntax::Methods
+
+  config.include SessionHelpers
 
   config.use_transactional_fixtures = false
 
