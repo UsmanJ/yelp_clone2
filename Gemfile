@@ -40,7 +40,8 @@ group :test do
   gem 'capybara'
   gem 'shoulda'
   gem 'rspec-collection_matchers'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
+  gem 'database_cleaner'
 end
 
 group :development, :test do

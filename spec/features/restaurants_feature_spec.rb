@@ -1,5 +1,4 @@
 require 'rails_helper'
-# require_relative '../factories/user'
 
 feature 'restaurants' do
   context 'no restaurants have been added' do
@@ -11,7 +10,6 @@ feature 'restaurants' do
   end
 
   context 'restaurants have been added' do
-
     before do
       Restaurant.create(name: 'KFC')
       # user = create(:user)
@@ -32,24 +30,23 @@ feature 'restaurants' do
 
 
   context 'creating restaurants' do
-    # before do
-    #   visit('/')
-    #   click_link('Sign up')
-    #   fill_in('Email', with: 'test@example.com')
-    #   fill_in('Password', with: 'testtest')
-    #   fill_in('Password confirmation', with: 'testtest')
-    #   click_button('Sign up')
-    # end
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
-      visit '/users/sign_in'
+      visit('/')
+      click_link('Sign up')
       fill_in('Email', with: 'test@example.com')
       fill_in('Password', with: 'testtest')
-      click_button('Log in')
-      visit '/restaurants/new'
+      fill_in('Password confirmation', with: 'testtest')
+      click_button('Sign up')
+      click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
       click_button 'Create Restaurant'
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
+    end
+
+    scenario 'user must be signed in to create restaurant' do
+      visit '/restaurants/new'
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
 
     context 'an invalid restaurant' do
