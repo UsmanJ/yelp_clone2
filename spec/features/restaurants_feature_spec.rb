@@ -23,9 +23,7 @@ feature 'restaurants' do
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
       user = build(:user)
       sign_up(user)
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'KFC'
-      click_button 'Create Restaurant'
+      add_restaurant
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
     end
@@ -36,7 +34,6 @@ feature 'restaurants' do
     end
 
     context 'an invalid restaurant' do
-
       it 'does not let you submit a name that is too short' do
         user = build(:user)
         sign_up(user)
@@ -60,10 +57,10 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-    let!(:kfc){Restaurant.create(name:'KFC')}
     scenario 'let a user edit a restaurant' do
       user = build(:user)
       sign_up(user)
+      add_restaurant
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       click_button 'Update Restaurant'
@@ -73,14 +70,13 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    let!(:kfc){Restaurant.create(name:'KFC')}
     scenario 'removes a restaurant when a user clicks a delete link' do
       user = build(:user)
       sign_up(user)
+      add_restaurant
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
     end
-
   end
 end

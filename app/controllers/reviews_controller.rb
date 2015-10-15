@@ -1,6 +1,3 @@
-require_relative './restaurants_controller'
-require_relative '../models/with_user_association_extension'
-
 class ReviewsController < ApplicationController
   def new
     @restaurant = Restaurant.find(params[:restaurant_id])
@@ -24,7 +21,26 @@ class ReviewsController < ApplicationController
     end
   end
 
+
   def review_params
     params.require(:review).permit(:thoughts, :rating)
+  end
+
+  def edit
+    @review = Review.find(params[:id])
+  end
+
+  def update
+    @review = Review.find(params[:id])
+    @review.update(review_params)
+
+    redirect_to restaurants_path
+  end
+
+  def destroy
+    @review = Review.find(params[:id])
+    @review.destroy
+    flash[:notice] = 'Review deleted successfully'
+    redirect_to restaurants_path
   end
 end
