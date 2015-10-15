@@ -22,4 +22,24 @@ feature 'reviewing' do
     delete_restaurant
     expect(page).to_not have_content('so so')
   end
+
+  def leave_review(thoughts, rating)
+    visit '/restaurants'
+    click_link 'Review KFC'
+    fill_in 'Thoughts', with: thoughts
+    select rating, from: 'Rating'
+    click_button 'Leave Review'
+  end
+
+  scenario 'displays an average rating for all reviews' do
+    user = build(:user)
+    user2 = build(:usertwo)
+    sign_up(user)
+    add_restaurant
+    add_review
+    click_link 'Sign out'
+    sign_up(user2)
+    leave_review('Great', '5')
+    expect(page).to have_content('Average rating: 4')
+  end
 end

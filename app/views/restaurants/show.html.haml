@@ -3,6 +3,7 @@
 %h3
   Review for
   = @restaurant.name
+  %h3 Average rating: #{@restaurant.average_rating.to_i}
 
 - if @restaurant.reviews.any?
   %ul
