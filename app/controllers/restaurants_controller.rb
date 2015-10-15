@@ -19,12 +19,6 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def build_review(attributes = {}, user)
-    review = reviews.build(attributes)
-    review.user = user
-    review
-  end
-
   def restaurant_params
     params.require(:restaurant).permit(:name)
   end
