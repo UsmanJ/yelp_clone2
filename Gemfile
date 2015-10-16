@@ -26,6 +26,8 @@ gem 'haml'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'paperclip'
+gem 'aws-sdk'
+gem 'pg'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 # Use ActiveModel has_secure_password
