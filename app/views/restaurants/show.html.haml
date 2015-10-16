@@ -3,17 +3,16 @@
 %h3
   Review for
   = @restaurant.name
-  %h3 Average rating: #{@restaurant.average_rating.to_i}
+  %h3 Average rating:
+  = star_rating(@restaurant.average_rating)
 
 - if @restaurant.reviews.any?
   %ul
     - @restaurant.reviews.each do |review|
       %li
         = review.thoughts
-        %strong= review.rating
-        \/5
+        = star_rating(review.rating)
       - if current_user == review.user
-        = link_to "Edit review", edit_restaurant_review_path(review.restaurant_id, review)
-        = link_to "Delete review", restaurant_review_path(review.restaurant_id, review), method: :delete
+        = link_to "Delete review", review_path(review.restaurant_id, review), method: :delete
 - else
   %p No reviews
