@@ -75,11 +75,12 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
+  # production:
+  #   url: <%= ENV['DATABASE_URL'] %>
 #
 production:
   <<: *default
   database: yelp_clone2_production
   username: yelp_clone2
+  # url: <%= ENV['DATABASE_URL'] %>
   password: <%= ENV['YELP_CLONE2_DATABASE_PASSWORD'] %>
