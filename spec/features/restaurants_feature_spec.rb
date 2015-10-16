@@ -28,6 +28,14 @@ feature 'restaurants' do
       expect(current_path).to eq '/restaurants'
     end
 
+    scenario "displays a default image if no image is uploaded" do
+      user = build(:user)
+      sign_up(user)
+      add_restaurant
+      expect(page).to have_css("img[src*='missing.png']")
+      # expect(page).to have_xpath("//img[contains(@src,'missing.png')]")
+    end
+
     scenario 'user must be signed in to create restaurant' do
       visit '/restaurants/new'
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
