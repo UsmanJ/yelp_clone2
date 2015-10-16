@@ -9,6 +9,8 @@ require 'capybara/rails'
 require 'database_cleaner'
 require 'factory_girl_rails'
 require_relative 'helpers/session'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -39,19 +41,30 @@ RSpec.configure do |config|
 
   config.include SessionHelpers
 
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  RSpec.configure do |config|
 
-  config.before(:each) do |example|
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
-    DatabaseCleaner.start
-  end
+    config.before(:suite) do
+      DatabaseCleaner.clean_with(:truncation)
+    end
 
-  config.after(:each) do
-    DatabaseCleaner.clean
+    config.before(:each) do
+      DatabaseCleaner.strategy = :transaction
+    end
+
+    config.before(:each, :js => true) do
+      DatabaseCleaner.strategy = :truncation
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
